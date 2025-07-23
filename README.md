@@ -30,7 +30,6 @@ git clone https://github.com/tu-usuario/api-productos.git
 cd api-productos
 ```
 
-````
 
 ### 2. Instalá las dependencias
 
@@ -195,4 +194,4 @@ Importá el token desde `/login` y accedé a las rutas protegidas ✅
 
 ```
 
-````
+
