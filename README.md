@@ -1,11 +1,9 @@
-Perfecto. A continuación te dejo un `README.md` completo, personalizado y profesional, adaptado a tu proyecto real con Firestore, Express y autenticación por JWT. Incluye estructura, instalación, endpoints y funcionamiento general, pero con un estilo diferente al de tu profesor:
-
----
-
 ````markdown
 # 🛠️ API REST - Gestión de Productos
 
 API REST desarrollada con **Node.js**, **Express** y **Firebase Firestore** para gestionar productos. Incluye operaciones CRUD, autenticación con JWT y control de acceso mediante middleware.
+
+Desarrollado como proyecto final integrador para la cursada **Back End** en **Node** en la comision **25023**
 
 ---
 
@@ -134,6 +132,8 @@ Elimina un producto permanentemente.
 
 ## ⚙️ Estado de respuestas
 
+---
+
 | Código | Significado                 |
 | ------ | --------------------------- |
 | 200    | OK                          |
@@ -143,6 +143,8 @@ Elimina un producto permanentemente.
 | 401    | No autorizado (sin token)   |
 | 404    | Recurso no encontrado       |
 | 500    | Error interno del servidor  |
+
+|******************\_\_\_******************
 
 ---
 
@@ -177,8 +179,10 @@ Elimina un producto permanentemente.
 
 ## ✍️ Autor
 
-Emanuel Marcello  
-Licenciatura en Sistemas - Cátedra de Backend/API REST
+Emanuel Marcello
+
+- [GitHub](https://github.com/EmaMarc)
+- [LinkedIn](https://www.linkedin.com/in/emamarcello)
 
 ---
 
@@ -187,7 +191,4 @@ Importá el token desde `/login` y accedé a las rutas protegidas ✅
 
 ```
 
----
-
-¿Querés que te prepare también el `.env-example`, una colección de Insomnia, o una documentación con Swagger?
 ```
