@@ -14,85 +14,87 @@ const products = JSON.parse(json);
 
 const productsCollection = collection(db, "products");
 
-// Exporto las funciones que interactúan con el modelo
-
-// retorna all products
+// Retorna todos los productos
 export const getAllProducts = async () => {
 	try {
 		const snapshot = await getDocs(productsCollection);
 		return snapshot.docs.map((doc) => ({ id: doc.id, ...doc.data() }));
 	} catch (error) {
-		console.error("Error getting all products: ", error);
+		console.error("Error getting all products:", error);
+		throw new Error("No se pudieron obtener los productos.");
 	}
 };
 
-// retorna product by ID
+// Retorna un producto por ID
 export const getProductById = async (id) => {
 	try {
 		const productRef = doc(productsCollection, id);
 		const snapshot = await getDoc(productRef);
 		return snapshot.exists() ? { id: snapshot.id, ...snapshot.data() } : null;
 	} catch (error) {
-		console.error("Error getting product by ID: ", error);
+		console.error(`Error getting product by ID (${id}):`, error);
+		throw new Error("No se pudo obtener el producto.");
 	}
 };
 
-// busca productos por nombre parcial (case-insensitive)
+// Busca productos por nombre parcial (case-insensitive)
 export const searchProductsByName = async (name) => {
 	try {
 		const snapshot = await getDocs(productsCollection);
 		const allProducts = snapshot.docs.map((doc) => ({ id: doc.id, ...doc.data() }));
-
 		const lowerName = name.toLowerCase();
-
 		return allProducts.filter((p) => p.name?.toLowerCase().includes(lowerName));
 	} catch (error) {
 		console.error("Error searching products:", error);
-		throw error;
+		throw new Error("No se pudieron buscar los productos.");
 	}
 };
 
-// crea y retorna un nuevo producto
+// Crea y retorna un nuevo producto
 export const createProduct = async (data) => {
 	try {
 		const docRef = await addDoc(productsCollection, data);
 		return { id: docRef.id, ...data };
 	} catch (error) {
-		console.error("Error creating product: ", error);
+		console.error("Error creating product:", error);
+		throw new Error("No se pudo crear el producto.");
 	}
 };
 
-// elimina un producto por ID
+// Elimina un producto por ID
 export const deleteProduct = async (id) => {
 	try {
 		const productRef = doc(productsCollection, id);
 		const snapshot = await getDoc(productRef);
 
 		if (!snapshot.exists()) {
-			return null; // si el producto no existe, retornamos null
+			return null; // Producto no encontrado
 		}
 
-		await deleteDoc(productRef); // eliminamos el producto
+		await deleteDoc(productRef);
 		return true;
 	} catch (error) {
-		console.error("Error deleting product: ", error);
+		console.error(`Error deleting product (${id}):`, error);
+		throw new Error("No se pudo eliminar el producto.");
 	}
 };
 
-// actualiza un producto por ID
+// Actualiza un producto por ID
 export const updateProduct = async (id, data) => {
 	try {
 		const productRef = doc(productsCollection, id);
 		const snapshot = await getDoc(productRef);
 
 		if (!snapshot.exists()) {
-			return null; // si no existe el producto, devolvemos null
+			return null; // Producto no encontrado
 		}
 
-		await setDoc(productRef, data, { merge: true }); // mergea con los datos existentes
-		return { id, ...data }; // retornamos el producto actualizado
+		await setDoc(productRef, data, { merge: true });
+		return { id, ...data };
 	} catch (error) {
-		console.error("Error updating product: ", error);
+		console.error(`Error updating product (${id}):`, error);
+		throw new Error("No se pudo actualizar el producto.");
 	}
 };
+
 

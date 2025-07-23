@@ -1,84 +1,110 @@
-import * as service from "../services/products.service.js";
 import * as model from "../models/product.model.js";
 
-// Controladores para manejar las peticiones HTTP relacionadas con productos
-
-// Los get los hago desde el service, para que sean utiles =====
-// =============================================================
+// Obtener todos los productos
 export const getAllProducts = async (req, res) => {
-	res.json(await model.getAllProducts());
+	try {
+		const products = await model.getAllProducts();
+		res.json(products);
+	} catch (error) {
+		console.error("Error al obtener productos:", error);
+		res.status(500).json({ error: "No se pudieron obtener los productos." });
+	}
 };
 
-//Buscar producto por nombre
+// Buscar producto por nombre
 export const searchProduct = async (req, res) => {
 	const { name } = req.query;
 
 	if (!name) {
-		return res.status(400).json({ error: "Falta el parámetro 'name' en la query" });
+		return res.status(400).json({ error: "Falta el parámetro 'name' en la query." });
 	}
 
 	try {
 		const filtered = await model.searchProductsByName(name);
 
 		if (filtered.length === 0) {
-			return res.status(404).json({ message: "No se encontraron productos" });
+			return res.status(404).json({ message: "No se encontraron productos que coincidan con el nombre." });
 		}
 
 		res.json(filtered);
 	} catch (error) {
-		console.error(error);
-		res.status(500).json({ error });
+		console.error("Error al buscar productos:", error);
+		res.status(500).json({ error: "Ocurrió un error al buscar productos." });
 	}
 };
 
+// Obtener producto por ID
 export const getProductById = async (req, res) => {
-	const { id } = req.params; //obtenemos el id del producto desde los params de la url
-	const allProducts = await model.getAllProducts();
-	const product = allProducts.find((item) => item.id == req.params.id);
-	if (!product) {
-		res.status(404).json({ error: "Producto no encontrado" });
-	} else {
+	const { id } = req.params;
+
+	try {
+		const product = await model.getProductById(id);
+
+		if (!product) {
+			return res.status(404).json({ error: "Producto no encontrado." });
+		}
+
 		res.json(product);
+	} catch (error) {
+		console.error(`Error al obtener producto con ID ${id}:`, error);
+		res.status(500).json({ error: "No se pudo obtener el producto." });
 	}
 };
 
-// Los post, put y delete los hago desde el model, ===========
-// ya que el service no hace nada ============================
-// ===========================================================
+// Crear un producto
+export const createProduct = async (req, res) => {
+	const data = req.body;
 
-export const createProduct = (req, res) => {
-	//console.log(req.body);//req.body es undefined porque no estamos usando un middleware para parsear el cuerpo de la solicitud
-	const { ...data } = req.body;
+	if (!data || Object.keys(data).length === 0) {
+		return res.status(400).json({ error: "No se enviaron datos para crear el producto." });
+	}
 
-	const newProduct = model.createProduct({ ...data });
-
-	res.status(201).json(newProduct); //estado 201 (creado)
+	try {
+		const newProduct = await model.createProduct(data);
+		res.status(201).json(newProduct);
+	} catch (error) {
+		console.error("Error al crear producto:", error);
+		res.status(500).json({ error: "No se pudo crear el producto." });
+	}
 };
 
+// Actualizar producto por ID
 export const updateProduct = async (req, res) => {
-	const productId = req.params.id; //obtenemos el id del producto desde los params de la url
+	const productId = req.params.id;
+	const data = req.body;
 
-	if (!req.body || Object.keys(req.body).length === 0) {
-		return res.status(400).json({ error: "No se enviaron datos para actualizar" });
+	if (!data || Object.keys(data).length === 0) {
+		return res.status(400).json({ error: "No se enviaron datos para actualizar." });
 	}
 
-	const updatedProduct = await model.updateProduct(productId, req.body);
+	try {
+		const updatedProduct = await model.updateProduct(productId, data);
 
-	if (!updatedProduct) {
-		return res.status(404).json({ error: "Producto no encontrado" }); //si no encontramos el producto, respondemos con un error 404
+		if (!updatedProduct) {
+			return res.status(404).json({ error: "Producto no encontrado." });
+		}
+
+		res.json(updatedProduct);
+	} catch (error) {
+		console.error(`Error al actualizar producto ${productId}:`, error);
+		res.status(500).json({ error: "No se pudo actualizar el producto." });
 	}
-
-	res.json(updatedProduct);
 };
 
-export const deleteProduct = (req, res) => {
-	const productId = req.params.id; //obtenemos el id del producto desde los params de la url
+// Eliminar producto por ID
+export const deleteProduct = async (req, res) => {
+	const productId = req.params.id;
 
-	const product = model.deleteProduct(productId); //llamamos al método del modelo para eliminar el producto
+	try {
+		const result = await model.deleteProduct(productId);
 
-	if (!product) {
-		return res.status(404).json({ error: "Producto no encontrado" }); //si no encontramos el producto, respondemos con un error 404
+		if (!result) {
+			return res.status(404).json({ error: "Producto no encontrado." });
+		}
+
+		res.status(204).send(); // No Content
+	} catch (error) {
+		console.error(`Error al eliminar producto ${productId}:`, error);
+		res.status(500).json({ error: "No se pudo eliminar el producto." });
 	}
-
-	res.status(204).send(); //respondemos con un estado 204 (sin contenido)
 };

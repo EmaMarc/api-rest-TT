@@ -7,18 +7,28 @@ const default_user = {
 };
 
 export const login = (req, res) => {
-	const { email, password } = req.body;
+	try {
+		const { email, password } = req.body;
 
-	const user = { id: 1 };
+		// 1. Validar que se hayan enviado ambos campos
+		if (!email || !password) {
+			return res.status(400).json({ error: "Email y contraseña son obligatorios." });
+		}
 
-	if (email == default_user.email && password == default_user.password) {
-		const payload = { user };
-		const expiration = { expiresIn: "1h" };
+		// 2. Validar credenciales
+		if (email === default_user.email && password === default_user.password) {
+			const payload = { user: { id: 1, email } };
+			const expiration = { expiresIn: "1h" };
 
-		const token = jwt.sign(payload, process.env.JWT_SECRET, expiration);
+			const token = jwt.sign(payload, process.env.JWT_SECRET, expiration);
 
-		return res.status(200).json({ token });
-	} else {
-		return res.status(401).json({ error: "" });
+			return res.status(200).json({ token });
+		}
+
+		// 3. Credenciales incorrectas
+		return res.status(401).json({ error: "Credenciales inválidas." });
+	} catch (error) {
+		// 4. Error inesperado
+		return res.status(500).json({ error: "Error interno del servidor." });
 	}
 };
