@@ -1,9 +1,11 @@
 ````markdown
 # 🛠️ API REST - Gestión de Productos
 
-API REST desarrollada con **Node.js**, **Express** y **Firebase Firestore** para gestionar productos. Incluye operaciones CRUD, autenticación con JWT y control de acceso mediante middleware.
+API REST desarrollada con **Node.js**, **Express** y **Firebase Firestore** para gestionar productos.
+Incluye operaciones CRUD, autenticación con JWT y control de acceso mediante middleware.
 
-Desarrollado como proyecto final integrador para la cursada **Back End** en **Node** en la comision **25023**
+Desarrollado como proyecto final integrador para la cursada **Back End** en **Node**,
+  en la comision **25023**
 
 ---
 
