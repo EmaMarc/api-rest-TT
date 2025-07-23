@@ -2,6 +2,8 @@
 
 API REST desarrollada con **Node.js**, **Express** y **Firebase Firestore** para gestionar productos. Incluye operaciones CRUD, autenticación con JWT y control de acceso mediante middleware.
 
+Desarrollado como proyecto final integrador para la cursada **Back End** en **Node**, en la comision **25023**
+
 ---
 
 ## 📦 ¿Qué hace esta API?
@@ -69,6 +71,7 @@ Authorization: Bearer <token>
 ## 📘 Endpoints principales
 
 ### 🔎 Obtener todos los productos
+
 **GET** `/products`
 
 Devuelve una lista con todos los productos.
@@ -76,6 +79,7 @@ Devuelve una lista con todos los productos.
 ---
 
 ### 🔍 Buscar productos por nombre
+
 **GET** `/products/search?name=camiseta`
 
 Filtra productos que contienen esa palabra en su nombre (case-insensitive).
@@ -83,6 +87,7 @@ Filtra productos que contienen esa palabra en su nombre (case-insensitive).
 ---
 
 ### 🧾 Obtener producto por ID
+
 **GET** `/products/:id`
 
 Busca un producto por su identificador único.
@@ -90,6 +95,7 @@ Busca un producto por su identificador único.
 ---
 
 ### ➕ Crear un producto
+
 **POST** `/products`  
 🔐 Requiere autenticación
 
@@ -97,14 +103,15 @@ Body esperado (JSON):
 
 ```json
 {
-  "name": "Mate Imperial",
-  "price": 500
+	"name": "Mate Imperial",
+	"price": 500
 }
 ```
 
 ---
 
 ### 🛠️ Actualizar un producto
+
 **PUT** `/products/:id`  
 🔐 Requiere autenticación
 
@@ -113,6 +120,7 @@ Reemplaza todos los datos del producto.
 ---
 
 ### ❌ Eliminar un producto
+
 **DELETE** `/products/:id`  
 🔐 Requiere autenticación
 
@@ -122,15 +130,15 @@ Elimina un producto permanentemente.
 
 ## ⚙️ Estado de respuestas
 
-| Código | Significado                |
-|--------|----------------------------|
-| 200    | OK                         |
-| 201    | Recurso creado             |
-| 204    | Eliminación exitosa        |
-| 400    | Error en los datos enviados|
-| 401    | No autorizado (sin token)  |
-| 404    | Recurso no encontrado      |
-| 500    | Error interno del servidor |
+| Código | Significado                 |
+| ------ | --------------------------- |
+| 200    | OK                          |
+| 201    | Recurso creado              |
+| 204    | Eliminación exitosa         |
+| 400    | Error en los datos enviados |
+| 401    | No autorizado (sin token)   |
+| 404    | Recurso no encontrado       |
+| 500    | Error interno del servidor  |
 
 ---
 
@@ -165,8 +173,10 @@ Elimina un producto permanentemente.
 
 ## ✍️ Autor
 
-Emanuel Marcello  
-Licenciatura en Sistemas - Cátedra de Backend/API REST
+Emanuel Marcello
+
+- [GitHub](https://github.com/EmaMarc)
+- [LinkedIn](https://www.linkedin.com/in/emamarcello)
 
 ---
 
