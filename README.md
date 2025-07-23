@@ -1,157 +1,193 @@
-# Api Rest en Node.js
+Perfecto. A continuación te dejo un `README.md` completo, personalizado y profesional, adaptado a tu proyecto real con Firestore, Express y autenticación por JWT. Incluye estructura, instalación, endpoints y funcionamiento general, pero con un estilo diferente al de tu profesor:
 
-## Descripción
+---
 
-API REST para gestión de productos desarrollada con Node.js y Express.
+````markdown
+# 🛠️ API REST - Gestión de Productos
 
-## Instalación
+API REST desarrollada con **Node.js**, **Express** y **Firebase Firestore** para gestionar productos. Incluye operaciones CRUD, autenticación con JWT y control de acceso mediante middleware.
 
-1. Clonar el repositorio
-2. Instalar dependencias:
+---
+
+## 📦 ¿Qué hace esta API?
+
+Esta API permite:
+
+- Consultar productos existentes
+- Buscar por nombre
+- Obtener un producto específico por ID
+- Crear, actualizar y eliminar productos (requiere autenticación)
+
+---
+
+## 🚀 Cómo empezar
+
+### 1. Cloná el repositorio
+
+```bash
+git clone https://github.com/tu-usuario/api-productos.git
+cd api-productos
+```
+````
+
+### 2. Instalá las dependencias
 
 ```bash
 npm install
 ```
 
-3. Configurar variables de entorno:
+### 3. Configurá el entorno
+
+Copiá el archivo de ejemplo `.env-example` y completá los datos requeridos:
 
 ```bash
-# Copiar el archivo de ejemplo y completar los datos requeridos
 cp .env-example .env
 ```
 
-Luego editar el archivo `.env` con los valores correspondientes para tu entorno.
+Variables necesarias:
 
-4. Ejecutar en modo desarrollo:
+```env
+JWT_SECRET=clave-secreta-para-tokens
+FIREBASE_API_KEY=...
+FIREBASE_PROJECT_ID=...
+# etc.
+```
+
+### 4. Ejecutá la API
 
 ```bash
 npm run dev
 ```
 
-## Documentación de la API
+---
 
-### Obtener todos los productos
+## 🔐 Autenticación
 
-- **GET** `/products`
-- **Descripción:** Devuelve la lista de todos los productos.
-- **Respuesta ejemplo:**
+Para crear, editar o eliminar productos, es necesario autenticarse vía JWT.  
+El endpoint de login genera un token que se debe enviar en el header:
+
+```http
+Authorization: Bearer <token>
+```
+
+---
+
+## 📘 Endpoints principales
+
+### 🔎 Obtener todos los productos
+
+**GET** `/products`
+
+Devuelve una lista con todos los productos.
+
+---
+
+### 🔍 Buscar productos por nombre
+
+**GET** `/products/search?name=camiseta`
+
+Filtra productos que contienen esa palabra en su nombre (case-insensitive).
+
+---
+
+### 🧾 Obtener producto por ID
+
+**GET** `/products/:id`
+
+Busca un producto por su identificador único.
+
+---
+
+### ➕ Crear un producto
+
+**POST** `/products`  
+🔐 Requiere autenticación
+
+Body esperado (JSON):
 
 ```json
-[
-	{ "id": 1, "name": "Camiseta Deportiva", "price": 150 },
-	{ "id": 2, "name": "Zapatos Running", "price": 1200 },
-	{ "id": 3, "name": "Mochila Escolar", "price": 350 }
-]
+{
+	"name": "Mate Imperial",
+	"price": 500
+}
 ```
 
-### Buscar productos por nombre
+---
 
-- **GET** `/products/search?name=palabra`
-- **Descripción:** Devuelve los productos cuyo nombre contiene la palabra indicada.
-- **Parámetros:**
-  - `name` (query, requerido): texto a buscar en el nombre del producto.
-- **Ejemplo de uso:** `/products/search?name=camiseta`
-- **Respuesta ejemplo:**
+### 🛠️ Actualizar un producto
 
-```json
-[{ "id": 1, "name": "Camiseta Deportiva", "price": 150 }]
-```
+**PUT** `/products/:id`  
+🔐 Requiere autenticación
 
-### Obtener producto por ID
+Reemplaza todos los datos del producto.
 
-- **GET** `/products/:id`
-- **Descripción:** Devuelve un producto específico por su ID.
-- **Parámetros:**
-  - `id` (path, requerido): ID del producto.
-- **Ejemplo de uso:** `/products/1`
-- **Respuesta ejemplo:**
+---
 
-```json
-{ "id": 1, "name": "Camiseta Deportiva", "price": 150 }
-```
+### ❌ Eliminar un producto
 
-### Crear un producto
+**DELETE** `/products/:id`  
+🔐 Requiere autenticación
 
-- **POST** `/products`
-- **Descripción:** Crea un nuevo producto.
-- **Body (JSON):**
+Elimina un producto permanentemente.
 
-```json
-{ "name": "Nuevo Producto", "price": 999 }
-```
+---
 
-- **Respuesta ejemplo:**
+## ⚙️ Estado de respuestas
 
-```json
-{ "id": 6, "name": "Nuevo Producto", "price": 999 }
-```
+| Código | Significado                 |
+| ------ | --------------------------- |
+| 200    | OK                          |
+| 201    | Recurso creado              |
+| 204    | Eliminación exitosa         |
+| 400    | Error en los datos enviados |
+| 401    | No autorizado (sin token)   |
+| 404    | Recurso no encontrado       |
+| 500    | Error interno del servidor  |
 
-### Actualizar un producto (PUT)
+---
 
-- **PUT** `/products/:id`
-- **Descripción:** Actualiza completamente un producto existente.
-- **Parámetros:**
-  - `id` (path, requerido): ID del producto a actualizar.
-- **Body (JSON):**
-
-```json
-{ "name": "Producto Actualizado", "price": 500 }
-```
-
-- **Respuesta ejemplo:**
-
-```json
-{ "id": 1, "name": "Producto Actualizado", "price": 500 }
-```
-
-### Actualizar parcialmente un producto (PATCH)
-
-- **PATCH** `/products/:id`
-- **Descripción:** Actualiza parcialmente un producto existente.
-- **Parámetros:**
-  - `id` (path, requerido): ID del producto a actualizar.
-- **Body (JSON):** Solo los campos que se desean actualizar
-
-```json
-{ "price": 600 }
-```
-
-- **Respuesta ejemplo:**
-
-```json
-{ "id": 1, "name": "Camiseta Deportiva", "price": 600 }
-```
-
-### Eliminar un producto
-
-- **DELETE** `/products/:id`
-- **Descripción:** Elimina un producto por su ID.
-- **Parámetros:**
-  - `id` (path, requerido): ID del producto a eliminar.
-- **Respuesta:** 204 No Content
-
-## Códigos de estado
-
-- `200` - OK: Operación exitosa
-- `201` - Created: Recurso creado exitosamente
-- `204` - No Content: Recurso eliminado exitosamente
-- `400` - Bad Request: Datos de entrada inválidos
-- `404` - Not Found: Recurso no encontrado
-
-## Estructura del proyecto
+## 🗂️ Estructura del proyecto
 
 ```
-src/
-├── Controllers/
+📁 src/
+├── controllers/
 │   └── products.controller.js
-├── Models/
-│   └── Product.js
-└── Routes/
-    └── products.router.js
+├── models/
+│   └── product.model.js
+├── services/
+│   └── products.service.js
+├── routes/
+│   └── products.router.js
+├── middlewares/
+│   └── auth.middleware.js
+└── index.js
 ```
 
-## Tecnologías utilizadas
+---
 
-- Node.js
-- Express.js
-- ES6 Modules
+## 🧰 Tecnologías utilizadas
+
+- [Node.js](https://nodejs.org/)
+- [Express](https://expressjs.com/)
+- [Firebase Firestore](https://firebase.google.com/products/firestore)
+- [jsonwebtoken](https://www.npmjs.com/package/jsonwebtoken)
+- [nodemon](https://www.npmjs.com/package/nodemon)
+
+---
+
+## ✍️ Autor
+
+Emanuel Marcello  
+Licenciatura en Sistemas - Cátedra de Backend/API REST
+
+---
+
+¿Querés probar la API con Insomnia o Postman?  
+Importá el token desde `/login` y accedé a las rutas protegidas ✅
+
+```
+
+---
+
+¿Querés que te prepare también el `.env-example`, una colección de Insomnia, o una documentación con Swagger?
+```
