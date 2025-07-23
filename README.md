@@ -1,12 +1,6 @@
-markdown
-
 # 🛠️ API REST - Gestión de Productos
 
-API REST desarrollada con **Node.js**, **Express** y **Firebase Firestore** para gestionar productos.
-Incluye operaciones CRUD, autenticación con JWT y control de acceso mediante middleware.
-
-Desarrollado como proyecto final integrador para la cursada **Back End** en **Node**,
-en la comision **25023**
+API REST desarrollada con **Node.js**, **Express** y **Firebase Firestore** para gestionar productos. Incluye operaciones CRUD, autenticación con JWT y control de acceso mediante middleware.
 
 ---
 
@@ -29,7 +23,6 @@ Esta API permite:
 git clone https://github.com/tu-usuario/api-productos.git
 cd api-productos
 ```
-
 
 ### 2. Instalá las dependencias
 
@@ -64,7 +57,7 @@ npm run dev
 
 ## 🔐 Autenticación
 
-Para crear, editar o eliminar productos, es necesario autenticarse vía JWT.
+Para crear, editar o eliminar productos, es necesario autenticarse vía JWT.  
 El endpoint de login genera un token que se debe enviar en el header:
 
 ```http
@@ -76,7 +69,6 @@ Authorization: Bearer <token>
 ## 📘 Endpoints principales
 
 ### 🔎 Obtener todos los productos
-
 **GET** `/products`
 
 Devuelve una lista con todos los productos.
@@ -84,7 +76,6 @@ Devuelve una lista con todos los productos.
 ---
 
 ### 🔍 Buscar productos por nombre
-
 **GET** `/products/search?name=camiseta`
 
 Filtra productos que contienen esa palabra en su nombre (case-insensitive).
@@ -92,7 +83,6 @@ Filtra productos que contienen esa palabra en su nombre (case-insensitive).
 ---
 
 ### 🧾 Obtener producto por ID
-
 **GET** `/products/:id`
 
 Busca un producto por su identificador único.
@@ -100,24 +90,22 @@ Busca un producto por su identificador único.
 ---
 
 ### ➕ Crear un producto
-
-**POST** `/products`
+**POST** `/products`  
 🔐 Requiere autenticación
 
 Body esperado (JSON):
 
 ```json
 {
-	"name": "Mate Imperial",
-	"price": 500
+  "name": "Mate Imperial",
+  "price": 500
 }
 ```
 
 ---
 
 ### 🛠️ Actualizar un producto
-
-**PUT** `/products/:id`
+**PUT** `/products/:id`  
 🔐 Requiere autenticación
 
 Reemplaza todos los datos del producto.
@@ -125,8 +113,7 @@ Reemplaza todos los datos del producto.
 ---
 
 ### ❌ Eliminar un producto
-
-**DELETE** `/products/:id`
+**DELETE** `/products/:id`  
 🔐 Requiere autenticación
 
 Elimina un producto permanentemente.
@@ -135,19 +122,15 @@ Elimina un producto permanentemente.
 
 ## ⚙️ Estado de respuestas
 
----
-
-| Código | Significado                 |
-| ------ | --------------------------- |
-| 200    | OK                          |
-| 201    | Recurso creado              |
-| 204    | Eliminación exitosa         |
-| 400    | Error en los datos enviados |
-| 401    | No autorizado (sin token)   |
-| 404    | Recurso no encontrado       |
-| 500    | Error interno del servidor  |
-
-|******************\_\_\_******************
+| Código | Significado                |
+|--------|----------------------------|
+| 200    | OK                         |
+| 201    | Recurso creado             |
+| 204    | Eliminación exitosa        |
+| 400    | Error en los datos enviados|
+| 401    | No autorizado (sin token)  |
+| 404    | Recurso no encontrado      |
+| 500    | Error interno del servidor |
 
 ---
 
@@ -182,16 +165,10 @@ Elimina un producto permanentemente.
 
 ## ✍️ Autor
 
-Emanuel Marcello
-
-- [GitHub](https://github.com/EmaMarc)
-- [LinkedIn](https://www.linkedin.com/in/emamarcello)
+Emanuel Marcello  
+Licenciatura en Sistemas - Cátedra de Backend/API REST
 
 ---
 
-¿Querés probar la API con Insomnia o Postman?
+¿Querés probar la API con Insomnia o Postman?  
 Importá el token desde `/login` y accedé a las rutas protegidas ✅
-
-```
-
-
