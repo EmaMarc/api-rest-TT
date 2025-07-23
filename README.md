@@ -1,11 +1,12 @@
-````markdown
+markdown
+
 # 🛠️ API REST - Gestión de Productos
 
 API REST desarrollada con **Node.js**, **Express** y **Firebase Firestore** para gestionar productos.
 Incluye operaciones CRUD, autenticación con JWT y control de acceso mediante middleware.
 
 Desarrollado como proyecto final integrador para la cursada **Back End** en **Node**,
-  en la comision **25023**
+en la comision **25023**
 
 ---
 
@@ -28,6 +29,7 @@ Esta API permite:
 git clone https://github.com/tu-usuario/api-productos.git
 cd api-productos
 ```
+
 ````
 
 ### 2. Instalá las dependencias
@@ -63,7 +65,7 @@ npm run dev
 
 ## 🔐 Autenticación
 
-Para crear, editar o eliminar productos, es necesario autenticarse vía JWT.  
+Para crear, editar o eliminar productos, es necesario autenticarse vía JWT.
 El endpoint de login genera un token que se debe enviar en el header:
 
 ```http
@@ -100,7 +102,7 @@ Busca un producto por su identificador único.
 
 ### ➕ Crear un producto
 
-**POST** `/products`  
+**POST** `/products`
 🔐 Requiere autenticación
 
 Body esperado (JSON):
@@ -116,7 +118,7 @@ Body esperado (JSON):
 
 ### 🛠️ Actualizar un producto
 
-**PUT** `/products/:id`  
+**PUT** `/products/:id`
 🔐 Requiere autenticación
 
 Reemplaza todos los datos del producto.
@@ -125,7 +127,7 @@ Reemplaza todos los datos del producto.
 
 ### ❌ Eliminar un producto
 
-**DELETE** `/products/:id`  
+**DELETE** `/products/:id`
 🔐 Requiere autenticación
 
 Elimina un producto permanentemente.
@@ -188,9 +190,9 @@ Emanuel Marcello
 
 ---
 
-¿Querés probar la API con Insomnia o Postman?  
+¿Querés probar la API con Insomnia o Postman?
 Importá el token desde `/login` y accedé a las rutas protegidas ✅
 
 ```
 
-```
+````
